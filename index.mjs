@@ -124,7 +124,7 @@ async function siteCrawler(hostname) {
 
         const loader = new RecursiveUrlLoader(crawled, {
             extractor: compiledConvert,
-            maxDepth: 6,
+            maxDepth: 14,
             excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
         });
         const webContents = await loader.load();
