@@ -123,7 +123,7 @@ async function siteCrawler(hostname) {
 
     const loader = new RecursiveUrlLoader(crawled, {
         extractor: compiledConvert,
-        maxDepth: 2,
+        maxDepth: 6,
         excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
     });
 
