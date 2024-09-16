@@ -176,7 +176,7 @@ async function main() {
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function mainLoop() {
-    while (True) {
+    while (true) {
         await main()
         await delay(60000*20)
     }
