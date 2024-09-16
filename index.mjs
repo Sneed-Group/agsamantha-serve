@@ -147,7 +147,9 @@ async function contextAdd(hostnames) {
 async function generateModelfile(c) {
     let ags_modelfile = ags_template_part1;
     for (const item of c) {
-        ags_modelfile += createContextPart(`${JSON.stringify(item)}`);
+        try {
+            ags_modelfile += createContextPart(`${JSON.stringify(item)}`);
+        } catch {} //very hacky.
     }
     ags_modelfile += ags_template_finalpart;
     return ags_modelfile;
@@ -157,7 +159,7 @@ async function main() {
     try {
         await contextAdd(["en.wikipedia.org", "toontownrewritten.wiki", "cnn.com"]);
         await contextAdd(["clubpenguin.fandom.com", "foxnews.com", "nytimes.com"])
-        await contextAdd(["https://stackoverflow.com/"]);
+        await contextAdd(["stackoverflow.com"]);
         const modelfile = await generateModelfile(contexts);
         console.log(modelfile);
         await writeFile(modelfilePath, modelfile)
@@ -168,8 +170,10 @@ async function main() {
           console.error('Error writing file:', err);
         });
         runPublishCommands();
+        return 0
     } catch (error) {
         console.error("Error in main function:", error);
+        return 1
     }
 }
 
