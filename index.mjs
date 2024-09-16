@@ -117,17 +117,18 @@ function generateSearchTerm(hostname) {
 const contexts = [];
 
 async function siteCrawler(hostname) {
-    const crawled = generateSearchTerm(hostname);
-
-    const compiledConvert = compile({ wordwrap: 130 });
-
-    const loader = new RecursiveUrlLoader(crawled, {
-        extractor: compiledConvert,
-        maxDepth: 6,
-        excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
-    });
+    
 
     try {
+        const crawled = generateSearchTerm(hostname);
+
+        const compiledConvert = compile({ wordwrap: 130 });
+
+        const loader = new RecursiveUrlLoader(crawled, {
+            extractor: compiledConvert,
+            maxDepth: 6,
+            excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
+        });
         const webContents = await loader.load();
         webContents.forEach(content => contexts.push(content));
         return webContents;
