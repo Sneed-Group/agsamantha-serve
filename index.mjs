@@ -117,8 +117,6 @@ function generateSearchTerm(hostname) {
 const contexts = [];
 
 async function siteCrawler(hostname) {
-    
-
     try {
         const crawled = generateSearchTerm(hostname);
 
@@ -139,7 +137,7 @@ async function siteCrawler(hostname) {
 }
 
 async function contextAdd(hostnames) {
-    const promises = hostnames.map(hostname => siteCrawler(hostname));
+    const promises = hostnames.map(hostname => siteCrawler(hostname) || "ERROR CRAWLING THIS SITE. IGNORE THIS DOCUMENT.");
     await Promise.all(promises);
     return contexts;
 }
