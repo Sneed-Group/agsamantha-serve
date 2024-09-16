@@ -9,7 +9,7 @@ import { promisify } from 'util';
 // Promisify exec for using async/await
 const execPromise = promisify(exec);
 
-const modelfilePath = "I:\rolling-agi-mf"
+const modelfilePath = "I:rolling-agi-mf"
 
 
 // Function to run the publishing commands
@@ -124,7 +124,7 @@ async function siteCrawler(hostname) {
     const loader = new RecursiveUrlLoader(crawled, {
         extractor: compiledConvert,
         maxDepth: 2,
-        excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net"],
+        excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
     });
 
     try {
@@ -156,7 +156,7 @@ async function main() {
     try {
         await contextAdd(["en.wikipedia.org", "toontownrewritten.wiki", "cnn.com"]);
         await contextAdd(["clubpenguin.fandom.com", "foxnews.com", "nytimes.com"])
-        await contextAdd(["https://stackoverflow.com/]");
+        await contextAdd(["https://stackoverflow.com/"]);
         const modelfile = await generateModelfile(contexts);
         console.log(modelfile);
         await writeFile(modelfilePath, modelfile)
@@ -181,4 +181,6 @@ async function mainLoop() {
     }
 }
 
-mainLoop()
+//mainLoop()
+
+main()
