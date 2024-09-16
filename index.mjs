@@ -11,6 +11,7 @@ const execPromise = promisify(exec);
 
 const modelfilePath = "I:rolling-agi-mf"
 
+const maxDepthCount = 8
 
 // Function to run the publishing commands
 async function runPublishCommands() {
@@ -124,7 +125,7 @@ async function siteCrawler(hostname) {
 
         const loader = new RecursiveUrlLoader(crawled, {
             extractor: compiledConvert,
-            maxDepth: 14,
+            maxDepth: maxDepthCount,
             excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
         });
         const webContents = await loader.load();
