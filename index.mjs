@@ -101,11 +101,11 @@ const ags_template_finalpart = `
 function createContextPart(c) {
     return `
 
-***DOCUMENT FOR CONTEXT BEGIN*** 
+***DOCUMENT FOR DATASET BEGIN*** 
 
 ${c}
 
-***DOCUMENT FOR CONTEXT END*** 
+***DOCUMENT FOR DATASET END*** 
 
 `
 }
