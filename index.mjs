@@ -134,7 +134,7 @@ async function siteCrawler(hostname) {
         return webContents;
     } catch (error) {
         console.error(`Failed to crawl site ${hostname}:`, error);
-        return [];
+        return webContents || [];
     }
 }
 
@@ -182,6 +182,4 @@ async function mainLoop() {
     }
 }
 
-//mainLoop()
-
-main()
+mainLoop()
