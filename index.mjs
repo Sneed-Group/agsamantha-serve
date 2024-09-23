@@ -13,7 +13,7 @@ const modelfilePath = "/Volumes/AGI/agi-mf"
 
 const modelID = "sparksammy/agsamantha"
 
-const maxDepthCount = 9
+const maxDepthCount = 8
 
 // Function to run the publishing commands
 async function runPublishCommands() {
@@ -118,8 +118,8 @@ ${c}
 }
 
 function generateSearchTerm(hostname) {
-    return `https://search.sparksammy.com/search.php?q=site%3A${encodeURIComponent(String(hostname))}&p=0&t=0`
-    //return `http://${hostname}`
+    //return `https://search.sparksammy.com/search.php?q=site%3A${encodeURIComponent(String(hostname))}&p=0&t=0`
+    return `http://${hostname}`
 }
 
 const contexts = [];
@@ -133,7 +133,7 @@ async function siteCrawler(hostname) {
         const loader = new RecursiveUrlLoader(crawled, {
             extractor: compiledConvert,
             maxDepth: maxDepthCount,
-            excludeDirs: ["https://doubleclick.net", "https://paypal.com"],
+            excludeDirs: ["https://doubleclick.net", "https://paypal.com", "https://archive.org"],
         });
         const webContents = await loader.load();
         webContents.forEach(content => contexts.push(content));
@@ -163,9 +163,10 @@ async function generateModelfile(c) {
 
 async function main() {
     try {
-        await contextAdd(["en.wikipedia.org", "toontownrewritten.wiki", "cnn.com"]);
+        await contextAdd(["en.wikipedia.org", "toontownrewritten.wiki", "cnn.com", "rezero.fandom.com", "fategrandorder.fandom.com"]);
         await contextAdd(["clubpenguin.fandom.com", "foxnews.com", "nytimes.com"])
         await contextAdd(["stackoverflow.com"]);
+        await contextAdd(["tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-algebra-i-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-english-ii-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-biology-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-us-history-answer-key.pdf")
         const modelfile = await generateModelfile(contexts);
         console.log(modelfile);
         await writeFile(modelfilePath, modelfile)
@@ -188,7 +189,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 async function mainLoop() {
     while (true) {
         await main()
-        await delay(60000*20)
+        await delay(60000*20) //20 minutes in ms.
     }
 }
 
