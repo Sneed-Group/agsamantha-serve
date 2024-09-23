@@ -166,7 +166,7 @@ async function main() {
         await contextAdd(["en.wikipedia.org", "toontownrewritten.wiki", "cnn.com", "rezero.fandom.com", "fategrandorder.fandom.com"]);
         await contextAdd(["clubpenguin.fandom.com", "foxnews.com", "nytimes.com"])
         await contextAdd(["stackoverflow.com"]);
-        await contextAdd(["tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-algebra-i-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-english-ii-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-biology-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-us-history-answer-key.pdf")
+        await contextAdd(["tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-algebra-i-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-english-ii-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-biology-answer-key.pdf", "tea.texas.gov/student-assessment/staar/released-test-questions/2024-staar-us-history-answer-key.pdf"])
         const modelfile = await generateModelfile(contexts);
         console.log(modelfile);
         await writeFile(modelfilePath, modelfile)
