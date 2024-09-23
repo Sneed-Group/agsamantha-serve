@@ -9,7 +9,7 @@ import { promisify } from 'util';
 // Promisify exec for using async/await
 const execPromise = promisify(exec);
 
-const modelfilePath = "/Volumes/AGI/agi"
+const modelfilePath = "/Volumes/AGI/agi-mf"
 
 const modelID = "sparksammy/agsamantha"
 
