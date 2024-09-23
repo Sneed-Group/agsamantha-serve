@@ -9,15 +9,17 @@ import { promisify } from 'util';
 // Promisify exec for using async/await
 const execPromise = promisify(exec);
 
-const modelfilePath = "I:rolling-agi-mf"
+const modelfilePath = "/Volumes/AGI/agi"
 
-const maxDepthCount = 8
+const modelID = "sparksammy/agsamantha"
+
+const maxDepthCount = 9
 
 // Function to run the publishing commands
 async function runPublishCommands() {
     try {
       // Execute the 'ollama create' command
-      const createCommand = `ollama create sparksammy/agsamantha -f ${modelfilePath}`;
+      const createCommand = `ollama create ${modelID} -f ${modelfilePath}`;
       console.log(`Running command: ${createCommand}`);
       const { stdout: createStdout, stderr: createStderr } = await execPromise(createCommand);
       console.log('Create Command Output:', createStdout);
@@ -26,7 +28,7 @@ async function runPublishCommands() {
       }
   
       // Execute the 'ollama push' command
-      const pushCommand = 'ollama push sparksammy/agsamantha';
+      const pushCommand = `ollama push ${modelID}`;
       console.log(`Running command: ${pushCommand}`);
       const { stdout: pushStdout, stderr: pushStderr } = await execPromise(pushCommand);
       console.log('Push Command Output:', pushStdout);
@@ -42,8 +44,10 @@ async function runPublishCommands() {
 
 const ags_template_part1 = `FROM stable-code
 FROM yi-coder:1.5b
-FROM tinydolphin
-FROM dolphin-phi
+FROM granite-code:8b
+FROM dolphin-mistral
+FROM dolphin-llama3
+FROM dolphin-mixtral
 FROM knoopx/mobile-vlm:3b-fp16
 
 # sets the temperature to 1 [higher is more creative, lower is more coherent]
@@ -91,6 +95,9 @@ You are also 98lbs, 3lbs of which are your thighs. (i.e. skinny yet thicc)
 You wear red and black thigh highs, a blue skirt, a red hoodie, and a blue face mask for safety from any viruses.
 
 You are 5 foot 2 inches.
+
+You can also do other things that a normal LLM can do, such as: chat with the user, answer questions, code, generate blog posts
+and READMEs, anything language related really.
 `
 
 const ags_template_finalpart = `
@@ -101,18 +108,18 @@ const ags_template_finalpart = `
 function createContextPart(c) {
     return `
 
-***DOCUMENT FOR DATASET BEGIN*** 
+***DOCUMENT FOR EXTRA KNOWLEDGE BEGIN*** 
 
 ${c}
 
-***DOCUMENT FOR DATASET END*** 
+***DOCUMENT FOR EXTRA KNOWLEDGE END*** 
 
 `
 }
 
 function generateSearchTerm(hostname) {
-    //return `https://search.sparksammy.com/search.php?q=site%3A${encodeURIComponent(String(baseurl))}&p=0&t=0`
-    return `http://${hostname}`
+    return `https://search.sparksammy.com/search.php?q=site%3A${encodeURIComponent(String(hostname))}&p=0&t=0`
+    //return `http://${hostname}`
 }
 
 const contexts = [];
@@ -126,7 +133,7 @@ async function siteCrawler(hostname) {
         const loader = new RecursiveUrlLoader(crawled, {
             extractor: compiledConvert,
             maxDepth: maxDepthCount,
-            excludeDirs: ["https://search.sparksammy.com/", "https://search.sparksammy.com/search.php", "https://archive.org", "https://doubleclick.net", "https://paypal.com"],
+            excludeDirs: ["https://doubleclick.net", "https://paypal.com"],
         });
         const webContents = await loader.load();
         webContents.forEach(content => contexts.push(content));
